@@ -1,21 +1,24 @@
 import adapter from '@sveltejs/adapter-static';
 
-const dev = process.env.NODE_ENV !== 'production';
+/** User/org site (repo named username.github.io) is served at the domain root — no base path. */
+const base = process.env.BASE_PATH ?? '';
 
 export default {
-	kit: {
-		adapter: adapter({
-			pages: 'build',
-			assets: 'build',
-			fallback: 'index.html'
-		}),
+  kit: {
+    adapter: adapter({
+      pages: 'build',
+      assets: 'build',
+      fallback: 'index.html',
+      strict: false
+    }),
 
-		paths: {
-			base: dev ? '' : '/LtDragibusDev.github.io'
-		},
+    paths: {
+      base
+    },
 
-		prerender: {
-			handleHttpError: 'warn'
-		}
-	}
+    prerender: {
+      handleHttpError: 'warn',
+      handleUnseenRoutes: 'ignore'
+    }
+  }
 };

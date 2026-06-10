@@ -1,5 +1,5 @@
 {
-	"name": "mikasjames.github.io",
+	"name": "ltdragibusdev.github.io",
 	"private": true,
 	"version": "0.0.1",
 	"type": "module",
@@ -17,11 +17,14 @@
 		"@sveltejs/adapter-static": "^3.0.10",
 		"@sveltejs/kit": "^2.64.0",
 		"@sveltejs/vite-plugin-svelte": "^7.0.0",
+		"@tailwindcss/cli": "^4.3.0",
 		"@tailwindcss/vite": "^4.1.8",
+		"autoprefixer": "^10.5.0",
 		"gh-pages": "^6.3.0",
+		"postcss": "^8.5.15",
 		"svelte": "^5.55.2",
 		"svelte-check": "^4.4.6",
-		"tailwindcss": "^4.1.8",
+		"tailwindcss": "^3.4.19",
 		"typescript": "^6.0.2",
 		"vite": "^8.0.7"
 	},
