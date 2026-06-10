@@ -1,4 +1,4 @@
-import { getPosts, getPostBySlug } from '$lib/firebase/firestore.svelte';
+import { getPosts, getPostBySlug } from '$lib/firebase/firestore';
 import { error } from '@sveltejs/kit';
 
 export const prerender = true;

@@ -4,7 +4,7 @@ import {
 	onAuthStateChanged,
 	type User
 } from 'firebase/auth';
-import { auth } from './firebase';
+import { auth } from "./firebase";
 
 export async function login(email: string, password: string): Promise<User> {
 	const credential = await signInWithEmailAndPassword(auth, email, password);

@@ -1,4 +1,4 @@
-import { getPosts } from "$lib/firebase/firestore.svelte";
+import { getPosts } from '$lib/firebase/firestore';
 import { SITE_URL } from "$lib/site";
 
 export const prerender = true;

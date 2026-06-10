@@ -1,5 +1,4 @@
-import { getPosts } from '$lib/firebase/firestore.svelte';
-
+import { getPosts } from '$lib/firebase/firestore';
 export const prerender = true;
 
 export async function load() {
