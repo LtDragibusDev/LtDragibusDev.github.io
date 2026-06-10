@@ -399,7 +399,7 @@
         </div>
 
         <footer
-            class="mt-16 pt-8 border-t border-zinc-800/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-600"
+            class="mt-16 pt-8 borRemove-Item -Path build -Recurse -Force -ErrorAction SilentlyContinueder-t border-zinc-800/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-600"
         >
             <p class="font-mono">
                 <span class="text-accent-400">&gt;_</span> zyRoWn · built with
