@@ -7,15 +7,15 @@
     let selectedSnippet = $state<{ name: string; lang: string; code: string } | null>(null);
 
     const skillTabs = [
-    "Backend & Systems",
-    "Frontend & Web",
-    "Scripting & Game Dev",
-    "DevOps & Cloud",
-    "Security & Networking",
-    "Databases & Data"
-];
+        "Backend & Systems",
+        "Frontend & Web",
+        "Scripting & Game Dev",
+        "DevOps & Cloud",
+        "Security & Networking",
+        "Databases & Data"
+    ];
 
-const snippets: Record<string, { lang: string; code: string }> = {
+    const snippets: Record<string, { lang: string; code: string }> = {
         "C#": { lang: "csharp", code: `using System;
 
 class Program {
@@ -38,7 +38,7 @@ int main() {
         std::cout << x << " ";
     return 0;
 }` },
-        ".NET": { lang: "csharp", code: `// ASP.NET Core Minimal API
+        ".NET": { lang: "csharp", code: `  ASP.NET Core Minimal API
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
@@ -196,7 +196,7 @@ local players = {"zyRoWn", "Player2", "Player3"}
 for i, p in ipairs(players) do
     print(i .. ": " .. greet(p))
 end` },
-        "GLua (Garry's Mod)": { lang: "lua", code: `-- Custom HUD element
+        "GLua (Garry\'s Mod)": { lang: "lua", code: `-- Custom HUD element
 hook.Add("HUDPaint", "CustomHealth", function()
     local ply = LocalPlayer()
     if not IsValid(ply) then return end
@@ -245,11 +245,9 @@ end)` },
     border-color: rgba(168, 85, 247, 0.4);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }` },
-        "Tailwind CSS": { lang: "html", code: `<div class="rounded-xl border border-zinc-800 bg-zinc-900/40 p-6
-            hover:border-zinc-700 transition-all duration-300 group">
+        "Tailwind CSS": { lang: "html", code: `<div class="rounded-xl border border-zinc-800 bg-zinc-900/40 p-6 hover:border-zinc-700 transition-all duration-300 group">
     <div class="flex items-center gap-3 mb-4">
-        <span class="w-2 h-2 rounded-full bg-purple-400
-                     group-hover:scale-125 transition-transform"></span>
+        <span class="w-2 h-2 rounded-full bg-purple-400 group-hover:scale-125 transition-transform"></span>
         <h3 class="text-zinc-100 font-semibold">zyRoWn</h3>
     </div>
     <p class="text-zinc-400 text-sm leading-relaxed">
@@ -268,7 +266,9 @@ end)` },
 }
 
 fetchUser(1).then(u => console.log(u?.name));` },
-        "TypeScript": { lang: "typescript", code: `interface User {
+"TypeScript": {
+    lang: "typescript",
+    code: `interface User {
     id: number;
     name: string;
     role: 'admin' | 'user';
@@ -280,10 +280,36 @@ async function getUser(id: number): Promise<User | null> {
     return res.json() as Promise<User>;
 }
 
-const user = await getUser(1);
-console.log(user?.name ?? 'Unknown');` },
-        "Svelte": { lang: "svelte", code: '<sc'+'ript>\n    let count = $state(0);\n    let doubled = $derived(count * 2);\n<\/sc'+'ript>\n\n<button onclick={() => count++}>\n    Clicked {count} times\n</button>\n<p>Doubled: {doubled}</p>\n\n<style>\n    button {\n        background: #a855f7;\n        color: white;\n        padding: 8px 16px;\n        border-radius: 8px;\n        border: none;\n        cursor: pointer;\n    }\n</style>' },
-        "SvelteKit": { lang: "typescript", code: "// src/routes/api/users/+server.ts\nimport { json } from \'@sveltejs/kit\';\nimport type { RequestHandler } from \'./$types\';\n\nexport const GET: RequestHandler = async ({ url }) => {\n    const id = url.searchParams.get(\'id\');\n    return json({ id, name: \'zyRoWn\' });\n};\n\n// src/routes/+page.server.ts\nexport const load = async ({ fetch }) => {\n    const res = await fetch(\'/api/users?id=1\');\n    const user = await res.json();\n    return { user };\n};" },
+fetchUser(1).then(u => console.log(u?.name));`
+},
+
+"Svelte": {
+    lang: "svelte",
+    code: `<\\script>
+    let count = 0;
+    let doubled = count * 2;
+<\\/script>
+
+<button on:click={() => count++}>
+    Clicked {count} times
+</button>
+
+<p>Doubled: {doubled}</p>`
+},
+        "SvelteKit": { lang: "typescript", code: `  src/routes/api/users/+server.ts
+import { json } from '@sveltejs/kit';
+
+export const GET = async ({ url }) => {
+    const id = url.searchParams.get('id');
+    return json({ id, name: 'zyRoWn' });
+};
+
+  src/routes/+page.server.ts
+export const load = async ({ fetch }) => {
+    const res = await fetch('/api/users?id=1');
+    const user = await res.json();
+    return { user };
+};` },
         "CI/CD (GitHub Actions)": { lang: "yaml", code: `name: Deploy
 on:
   push:
@@ -300,7 +326,9 @@ jobs:
       - run: npm ci
       - run: npm run build
       - uses: actions/deploy-pages@v4` },
-        "Terraform": { lang: "hcl", code: `provider "aws" {
+"Terraform": {
+    lang: "hcl",
+    code: `provider "aws" {
     region = "eu-west-1"
 }
 
@@ -317,14 +345,12 @@ output "ip" {
     value = aws_instance.web.public_ip
 }`
 },
-
 "Ansible": {
     lang: "yaml",
     code: `---
 - name: Setup web server
   hosts: all
   become: yes
-
   tasks:
     - name: Install nginx
       apt:
@@ -335,71 +361,49 @@ output "ip" {
       service:
         name: nginx
         state: started
-        enabled: yes
-`
+        enabled: yes`
 },
-
 "Web Exploitation": {
     lang: "python",
-    code: `import requests
-
-target = "http://target.com/login"
-
-# SQL Injection test
-payload = {
-    "user": "admin' --",
-    "pass": "x"
-}
-
-r = requests.post(target, data=payload)
-print(r.status_code)
-
-# XSS detection
-xss = "<script>alert(1)</script>"
-
-r2 = requests.get(target, params={"q": xss})
-
-if xss in r2.text:
-    print("[!] XSS reflected")
-`
+    code: [
+        "import requests",
+        "",
+        'target = "http://target.com/login"',
+        "",
+        "# SQL Injection test",
+        'payload = {"user": "admin\' --", "pass": "x"}',
+        "r = requests.post(target, data=payload)",
+        "print(r.status_code)",
+        "",
+        "# XSS detection",
+        'xss = "<\\script>alert(1)<\\/script>"',
+        'r2 = requests.get(target, params={"q": xss})',
+        "",
+        "if xss in r2.text:",
+        '    print("[!] XSS reflected")'
+    ].join("\n")
 },
 
-"Cryptography": {
-    lang: "python",
-    code: `from Crypto.Cipher import AES
-from Crypto.Random import get_random_bytes
-import base64
+  "Cryptography": { lang: "python", code: `from Crypto.Cipher import AES
+  from Crypto.Random import get_random_bytes
+  import base64
 
-key = get_random_bytes(16)
-cipher = AES.new(key, AES.MODE_EAX)
+  key = get_random_bytes(16)
+  cipher = AES.new(key, AES.MODE_EAX)
 
-message = b"CTF flag: flag{zyrown_1337}"
+  message = b"CTF flag: flag{zyrown_1337}"
+  ciphertext, tag = cipher.encrypt_and_digest(message)
+  print("Encrypted:", base64.b64encode(ciphertext).decode())
 
-ciphertext, tag = cipher.encrypt_and_digest(message)
-
-print("Encrypted:", base64.b64encode(ciphertext).decode())
-
-cipher2 = AES.new(
-    key,
-    AES.MODE_EAX,
-    nonce=cipher.nonce
-)
-
-plaintext = cipher2.decrypt(ciphertext)
-
-print("Decrypted:", plaintext.decode())
-`
-},
+  cipher2 = AES.new(key, AES.MODE_EAX, nonce=cipher.nonce)
+  plaintext = cipher2.decrypt(ciphertext)
+  print("Decrypted:", plaintext.decode())` },
 
 "Reverse Engineering": {
     lang: "python",
     code: `import angr
 
-proj = angr.Project(
-    "./crackme",
-    auto_load_libs=False
-)
-
+proj = angr.Project('./crackme', auto_load_libs=False)
 state = proj.factory.entry_state()
 simgr = proj.factory.simulation_manager(state)
 
@@ -409,83 +413,9 @@ simgr.explore(
 )
 
 if simgr.found:
-    found = simgr.found[0]
-    print(found.posix.dumps(0))
-`
-}
-
-if simgr.found:
-    print(simgr.found[0].posix.dumps(0))` },
-        "MySQL": { lang: "sql", code: `CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) UNIQUE NOT NULL,
-    email VARCHAR(100) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-INSERT INTO users (username, email)
-VALUES ('zyrown', 'zy@example.com');
-
-SELECT u.username, COUNT(p.id) as post_count
-FROM users u
-LEFT JOIN posts p ON p.user_id = u.id
-GROUP BY u.id
-ORDER BY post_count DESC;` },
-        "SQLite": { lang: "python", code: `import sqlite3
-
-conn = sqlite3.connect("app.db")
-cursor = conn.cursor()
-
-cursor.execute("""
-    CREATE TABLE IF NOT EXISTS notes (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT NOT NULL,
-        body TEXT
-    )
-""")
-
-cursor.execute("INSERT INTO notes (title, body) VALUES (?, ?)",
-    ("CTF notes", "flag{example}"))
-conn.commit()
-
-for row in cursor.execute("SELECT * FROM notes"):
-    print(row)
-
-conn.close()` },
-        "MongoDB": { lang: "javascript", code: `import { MongoClient } from 'mongodb';
-
-const client = new MongoClient('mongodb://localhost:27017');
-await client.connect();
-
-const db = client.db('portfolio');
-const users = db.collection('users');
-
-await users.insertOne({ name: 'zyRoWn', role: 'admin' });
-
-const user = await users.findOne({ name: 'zyRoWn' });
-console.log(user);
-
-await users.updateOne(
-    { name: 'zyRoWn' },
-    { $set: { active: true } }
-);` },
-        "SQL": { lang: "sql", code: `-- Window functions
-SELECT
-    name,
-    score,
-    RANK() OVER (ORDER BY score DESC) as rank,
-    AVG(score) OVER () as avg_score
-FROM ctf_results;
-
--- CTE
-WITH top_players AS (
-    SELECT * FROM players WHERE score > 1000
-)
-SELECT name, score FROM top_players
-ORDER BY score DESC
-LIMIT 10;` },
+    print(simgr.found[0].posix.dumps(0))`
+},
     };
-
     const skills: Record<string, string[]> = {
         "Backend & Systems": ["C#", "C++", ".NET", "ASP.NET Core", "Entity Framework", "Python", "FastAPI", "Django", "Flask", "Go", "Rust", "Node.js", "Express.js", "NestJS", "Lua", "GLua"],
         "Frontend & Web": ["HTML5", "CSS3", "Tailwind CSS", "JavaScript", "TypeScript", "Svelte", "SvelteKit"],
@@ -602,7 +532,7 @@ LIMIT 10;` },
                     <span class="font-mono text-sm text-accent-400">{selectedSnippet.name}</span>
                     <span class="text-xs text-zinc-600 font-mono">.{selectedSnippet.lang}</span>
                 </div>
-                <button onclick={closeSnippet} class="text-zinc-500 hover:text-zinc-200 transition-colors text-xl leading-none">×</button>
+                <button onclick={closeSnippet} class="text-zinc-500 hover:text-zinc-200 transition-colors text-xl leading-none">x</button>
             </div>
             <pre class="overflow-x-auto p-5 text-sm text-zinc-300 font-mono leading-relaxed max-h-[60vh] overflow-y-auto"><code>{selectedSnippet.code}</code></pre>
         </div>
@@ -612,7 +542,6 @@ LIMIT 10;` },
 <section id="about" data-observe class="relative min-h-screen flex items-center justify-center overflow-hidden px-6">
     <div class="absolute inset-0 bg-[linear-gradient(to_right,#27272a18_1px,transparent_1px),linear-gradient(to_bottom,#27272a18_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
     <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-indigo-600/8 blur-[120px] pointer-events-none"></div>
-
     <div class="relative max-w-5xl mx-auto w-full pt-24 pb-16">
         <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-900 border border-zinc-800 text-xs text-zinc-400 mb-8">
             <span class="relative flex h-2 w-2">
@@ -621,41 +550,32 @@ LIMIT 10;` },
             </span>
             Available · Based in France
         </div>
-
         <p class="font-mono text-accent-400 text-sm mb-4 tracking-wider">Hello, I'm</p>
-
         <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight mb-4 leading-[1.05]">
             <span class="text-zinc-50">zyRoWn</span><br />
             <span class="bg-gradient-to-r from-indigo-400 via-violet-400 to-purple-400 bg-clip-text text-transparent">
                 Full-Stack Developer & CTF Player
             </span>
         </h1>
-
         <p class="text-lg sm:text-xl text-zinc-400 font-medium mb-6">
             TypeScript · Python · C# · C++ · GLua
             <span class="text-zinc-600 mx-2">·</span>
             <span class="font-mono text-sm text-zinc-500">1st Place — Root Me Pro CTF @ Campus Cyber 2025</span>
         </p>
-
         <p class="max-w-2xl text-zinc-400 text-base leading-relaxed mb-10">
             Passionate about software engineering and offensive cybersecurity.
             I build scalable applications, robust backend systems, and immersive game experiences with GLua.
             Specialized in production infrastructure and high-impact CTF challenges.
         </p>
-
         <div class="flex flex-wrap gap-4">
-            <a href="https://github.com/LtDragibusDev" target="_blank" rel="noopener noreferrer"
+            <a href="https: github.com/LtDragibusDev" target="_blank" rel="noopener noreferrer"
                 class="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-200 text-sm font-medium hover:bg-zinc-800 hover:border-zinc-700 transition-all duration-200 group">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
                 </svg>
                 GitHub
-                <svg class="w-3 h-3 opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-                </svg>
             </a>
         </div>
-
         <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
             <span class="text-xs font-mono text-zinc-500 tracking-widest uppercase">scroll</span>
             <div class="w-px h-10 bg-gradient-to-b from-zinc-500 to-transparent"></div>
@@ -671,7 +591,6 @@ LIMIT 10;` },
             <h2 class="text-3xl sm:text-4xl font-bold text-zinc-50">Experience</h2>
             <div class="mt-4 h-px w-16 bg-gradient-to-r from-accent-500 to-transparent"></div>
         </div>
-
         <div class="relative">
             <div class="absolute left-[7px] md:left-[11px] top-2 bottom-2 w-px bg-gradient-to-b from-zinc-700 via-zinc-800 to-transparent"></div>
             <div class="flex flex-col gap-12">
@@ -714,9 +633,8 @@ LIMIT 10;` },
             <p class="font-mono text-accent-400 text-xs tracking-widest uppercase mb-3">03. Tech Stack</p>
             <h2 class="text-3xl sm:text-4xl font-bold text-zinc-50">Skills & Technologies</h2>
             <div class="mt-4 h-px w-16 bg-gradient-to-r from-accent-500 to-transparent"></div>
-            <p class="mt-3 text-xs text-zinc-500 font-mono">// click a skill to see a code example</p>
+            <p class="mt-3 text-xs text-zinc-500 font-mono">  click a skill to see a code example</p>
         </div>
-
         <div id="skills-tabs" data-observe
             class="transition-all duration-700 delay-100 {isVisible('skills-tabs') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}">
             <div class="flex flex-wrap gap-2 mb-8">
@@ -730,7 +648,6 @@ LIMIT 10;` },
                     </button>
                 {/each}
             </div>
-
             <div class="flex flex-wrap gap-3 min-h-[140px]">
                 {#each skills[activeSkillTab] as skill (skill)}
                     {@const hasSnippet = !!snippets[skill]}
@@ -751,7 +668,6 @@ LIMIT 10;` },
                 {/each}
             </div>
         </div>
-
         <div id="skills-stats" data-observe
             class="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-4 transition-all duration-700 delay-200 {isVisible('skills-stats') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}">
             {#each [
@@ -774,16 +690,14 @@ LIMIT 10;` },
         <div id="contact-inner" data-observe
             class="rounded-2xl border border-zinc-800 bg-gradient-to-br from-zinc-900 to-zinc-900/50 p-10 md:p-16 text-center relative overflow-hidden transition-all duration-700 {isVisible('contact-inner') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}">
             <div class="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-accent-500/10 blur-3xl rounded-full pointer-events-none"></div>
-
             <p class="font-mono text-accent-400 text-xs tracking-widest uppercase mb-4">04. Get In Touch</p>
             <h2 class="text-3xl sm:text-4xl font-bold text-zinc-50 mb-4">Contact</h2>
             <p class="text-zinc-400 max-w-lg mx-auto leading-relaxed mb-10">
                 Open to collaborations, freelance opportunities, or just interesting conversations.
                 Feel free to reach out on Discord or GitHub.
             </p>
-
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="https://github.com/LtDragibusDev" target="_blank" rel="noopener noreferrer"
+                <a href="https: github.com/LtDragibusDev" target="_blank" rel="noopener noreferrer"
                     class="inline-flex items-center gap-2.5 px-6 py-3 rounded-lg bg-zinc-800 border border-zinc-700 text-zinc-200 text-sm font-semibold hover:bg-zinc-700 hover:border-zinc-600 transition-all duration-200">
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
@@ -792,13 +706,12 @@ LIMIT 10;` },
                 </a>
             </div>
         </div>
-
         <footer class="mt-16 pt-8 border-t border-zinc-800/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-600">
             <p class="font-mono">
                 <span class="text-accent-400">&gt;_</span> zyRoWn · built with
-                <a href="https://kit.svelte.dev" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-400 transition-colors underline underline-offset-2">SvelteKit</a>
+                <a href="https: kit.svelte.dev" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-400 transition-colors underline underline-offset-2">SvelteKit</a>
                 &
-                <a href="https://tailwindcss.com" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-400 transition-colors underline underline-offset-2">Tailwind CSS</a>
+                <a href="https: tailwindcss.com" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-400 transition-colors underline underline-offset-2">Tailwind CSS</a>
             </p>
             <p>© {new Date().getFullYear()} zyRoWn. All rights reserved.</p>
         </footer>
