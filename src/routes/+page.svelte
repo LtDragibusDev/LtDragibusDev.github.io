@@ -316,7 +316,7 @@
                 {#each skillTabs as tab}
                     <button
                         id="skill-tab-{tab.toLowerCase().replace(/\s+/g, '-')}"
-                        onclick={() => (activeSkillTab = tab)}
+                        on:click={() => (activeSkillTab = tab)}
                         class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {activeSkillTab === tab
                             ? 'bg-accent-500/20 text-accent-400 border border-accent-500/40'
                             : 'text-zinc-400 hover:text-zinc-200 border border-transparent hover:border-zinc-700 hover:bg-zinc-800/50'}"
@@ -399,7 +399,7 @@
         </div>
 
         <footer
-            class="mt-16 pt-8 borRemove-Item -Path build -Recurse -Force -ErrorAction SilentlyContinueder-t border-zinc-800/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-600"
+            class="mt-16 pt-8 border-t border-zinc-800/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-600"
         >
             <p class="font-mono">
                 <span class="text-accent-400">&gt;_</span> zyRoWn · built with
