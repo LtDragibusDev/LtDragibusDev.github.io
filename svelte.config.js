@@ -1,5 +1,7 @@
 import adapter from '@sveltejs/adapter-static';
 
+const dev = process.env.NODE_ENV !== 'production';
+
 export default {
 	kit: {
 		adapter: adapter({
@@ -9,7 +11,7 @@ export default {
 		}),
 
 		paths: {
-			base: '/LtDragibusDev.github.io'
+			base: dev ? '' : '/LtDragibusDev.github.io'
 		},
 
 		prerender: {
