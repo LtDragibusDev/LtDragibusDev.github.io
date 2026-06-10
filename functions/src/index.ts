@@ -1,3 +1,4 @@
+import { browser } from '\/environment';
 import { onDocumentWritten } from 'firebase-functions/v2/firestore';
 import { SecretManagerServiceClient } from '@google-cloud/secret-manager';
 import { initializeApp } from 'firebase-admin/app';
@@ -70,3 +71,4 @@ export const deployOnPostChange = onDocumentWritten(
     }
   },
 );
+

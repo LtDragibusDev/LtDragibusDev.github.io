@@ -14,7 +14,7 @@
 		type BlogPost,
 		type ImageMeta,
 		type MediaItem,
-	} from "$lib/firebase/firestore.svelte";
+	} from "$lib/firebase/firestore";
 import {
 	extractImageUrlsFromMarkdown,
 	sanitizeImageMetaFromMarkdown,

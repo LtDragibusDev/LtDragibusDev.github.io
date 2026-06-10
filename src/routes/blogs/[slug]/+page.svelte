@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { marked } from "marked";
-import type { BlogPost } from "$lib/firebase/firestore.svelte";
+import type { BlogPost } from "$lib/firebase/firestore.js";
 import { transformMediaMarkdown } from "$lib/utils/mediaMarkdown";
 
 let { data } = $props();
