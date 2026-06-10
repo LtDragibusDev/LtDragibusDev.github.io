@@ -1,130 +1,176 @@
+import { browser } from '$app/environment';
+
 import {
-  collection,
-  doc,
-  addDoc,
-  getDocs,
-  query,
-  orderBy,
-  serverTimestamp,
-  updateDoc,
-  deleteDoc,
-  type DocumentData
+	collection,
+	doc,
+	addDoc,
+	getDocs,
+	query,
+	orderBy,
+	serverTimestamp,
+	updateDoc,
+	deleteDoc,
+	where,
+	type DocumentData
 } from 'firebase/firestore';
 
 import { db } from './firebase';
 
+/* ---------------- TYPES ---------------- */
+
 export interface ImageMeta {
-  width: number;
-  height: number;
+	width: number;
+	height: number;
 }
 
 export interface BlogPost {
-  id: string;
-  title: string;
-  slug: string;
-  excerpt: string;
-  content: string;
-  coverImage: string | null;
-  imageMeta?: Record<string, ImageMeta>;
-  createdAt: Date | null;
+	id: string;
+	title: string;
+	slug: string;
+	excerpt: string;
+	content: string;
+	coverImage: string | null;
+	imageMeta?: Record<string, ImageMeta>;
+	createdAt: Date | null;
 }
 
 const COLLECTION = 'blogs';
 
-export async function getPosts(): Promise<BlogPost[]> {
-  const q = query(
-    collection(db, COLLECTION),
-    orderBy('createdAt', 'desc')
-  );
+/* ---------------- BLOG POSTS ---------------- */
 
-  const snapshot = await getDocs(q);
-  return snapshot.docs.map(d => docToPost(d.id, d.data()));
+export async function getPosts(): Promise<BlogPost[]> {
+	if (!browser || !db) return [];
+
+	const q = query(
+		collection(db, COLLECTION),
+		orderBy('createdAt', 'desc')
+	);
+
+	const snapshot = await getDocs(q);
+
+	return snapshot.docs.map((d) => docToPost(d.id, d.data()));
 }
 
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
-  const snapshot = await getDocs(collection(db, COLLECTION));
+	if (!browser || !db) return null;
 
-  const match = snapshot.docs.find(d => d.data().slug === slug);
+	const q = query(
+		collection(db, COLLECTION),
+		where('slug', '==', slug)
+	);
 
-  if (!match) return null;
+	const snapshot = await getDocs(q);
 
-  return docToPost(match.id, match.data());
+	if (snapshot.empty) return null;
+
+	const d = snapshot.docs[0];
+
+	return docToPost(d.id, d.data());
 }
 
-export async function createPost(data: Omit<BlogPost, 'id' | 'createdAt'>): Promise<string> {
-  const ref = await addDoc(collection(db, COLLECTION), {
-    ...data,
-    createdAt: serverTimestamp()
-  });
+export async function createPost(
+	data: Omit<BlogPost, 'id' | 'createdAt'>
+): Promise<string> {
+	if (!browser || !db) throw new Error('Firestore not available');
 
-  return ref.id;
+	const ref = await addDoc(collection(db, COLLECTION), {
+		...data,
+		createdAt: serverTimestamp()
+	});
+
+	return ref.id;
 }
 
-export async function updatePost(id: string, data: Partial<BlogPost>): Promise<void> {
-  const postRef = doc(db, COLLECTION, id);
-  await updateDoc(postRef, data);
+export async function updatePost(
+	id: string,
+	data: Partial<BlogPost>
+): Promise<void> {
+	if (!browser || !db) return;
+
+	const postRef = doc(db, COLLECTION, id);
+	await updateDoc(postRef, data);
 }
 
 export async function deletePost(id: string): Promise<void> {
-  const postRef = doc(db, COLLECTION, id);
-  await deleteDoc(postRef);
+	if (!browser || !db) return;
+
+	const postRef = doc(db, COLLECTION, id);
+	await deleteDoc(postRef);
 }
+
+/* ---------------- MAPPING ---------------- */
 
 function docToPost(id: string, data: DocumentData): BlogPost {
-  return {
-    id,
-    title: data.title ?? '',
-    slug: data.slug ?? '',
-    excerpt: data.excerpt ?? '',
-    content: data.content ?? '',
-    coverImage: data.coverImage ?? null,
-    imageMeta: data.imageMeta ?? {},
-    createdAt: data.createdAt?.toDate?.() ?? null
-  };
+	return {
+		id,
+		title: data.title ?? '',
+		slug: data.slug ?? '',
+		excerpt: data.excerpt ?? '',
+		content: data.content ?? '',
+		coverImage: data.coverImage ?? null,
+		imageMeta: data.imageMeta ?? {},
+		createdAt: data.createdAt?.toDate?.() ?? null
+	};
 }
 
+/* ---------------- MEDIA ---------------- */
+
 export interface MediaItem {
-  id: string;
-  url: string;
-  name: string;
-  uploadedAt: Date | null;
-  width?: number;
-  height?: number;
+	id: string;
+	url: string;
+	name: string;
+	uploadedAt: Date | null;
+	width?: number;
+	height?: number;
 }
 
 const MEDIA_COLLECTION = 'media_gallery';
 
 export async function getMediaItems(): Promise<MediaItem[]> {
-  const q = query(
-    collection(db, MEDIA_COLLECTION),
-    orderBy('uploadedAt', 'desc')
-  );
+	if (!browser || !db) return [];
 
-  const snapshot = await getDocs(q);
-  return snapshot.docs.map(d => docToMediaItem(d.id, d.data()));
+	const q = query(
+		collection(db, MEDIA_COLLECTION),
+		orderBy('uploadedAt', 'desc')
+	);
+
+	const snapshot = await getDocs(q);
+
+	return snapshot.docs.map((d) => docToMediaItem(d.id, d.data()));
 }
 
-export async function addMediaItem(data: { url: string; name: string; width?: number; height?: number }): Promise<string> {
-  const ref = await addDoc(collection(db, MEDIA_COLLECTION), {
-    ...data,
-    uploadedAt: serverTimestamp()
-  });
+export async function addMediaItem(data: {
+	url: string;
+	name: string;
+	width?: number;
+	height?: number;
+}): Promise<string> {
+	if (!browser || !db) throw new Error('Firestore not available');
 
-  return ref.id;
+	const ref = await addDoc(collection(db, MEDIA_COLLECTION), {
+		...data,
+		uploadedAt: serverTimestamp()
+	});
+
+	return ref.id;
 }
 
 export async function deleteMediaItem(id: string): Promise<void> {
-  const mediaRef = doc(db, MEDIA_COLLECTION, id);
-  await deleteDoc(mediaRef);
+	if (!browser || !db) return;
+
+	const mediaRef = doc(db, MEDIA_COLLECTION, id);
+	await deleteDoc(mediaRef);
 }
 
+/* ---------------- MEDIA MAPPING ---------------- */
+
 function docToMediaItem(id: string, data: DocumentData): MediaItem {
-  return {
-    id,
-    url: data.url ?? '',
-    name: data.name ?? '',
-    uploadedAt: data.uploadedAt?.toDate?.() ?? null,
-    width: data.width,
-    height: data.height
-  };
+	return {
+		id,
+		url: data.url ?? '',
+		name: data.name ?? '',
+		uploadedAt: data.uploadedAt?.toDate?.() ?? null,
+		width: data.width,
+		height: data.height
+	};
 }
