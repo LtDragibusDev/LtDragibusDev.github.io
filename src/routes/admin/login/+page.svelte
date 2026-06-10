@@ -48,7 +48,7 @@
 </script>
 
 <svelte:head>
-	<title>Admin Login · Mikas James</title>
+	<title>Admin Login · zyRoWn</title>
 	<meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 
@@ -77,7 +77,7 @@
 				<div class="mb-8 text-center">
 					<span
 						class="font-mono text-accent-400 text-xs tracking-widest uppercase"
-						>&gt;_ mikas</span
+						>&gt;_ zyRoWn</span
 					>
 					<h1 class="mt-2 text-xl font-semibold text-zinc-100">
 						Admin Access

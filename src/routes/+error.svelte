@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<title>Error · Mikas James</title>
+	<title>Error · zyRoWn</title>
 </svelte:head>
 
 <div class="min-h-screen bg-[#09090b] flex items-center justify-center px-6 py-20 relative overflow-hidden">

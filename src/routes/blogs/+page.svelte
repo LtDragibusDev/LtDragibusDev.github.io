@@ -22,7 +22,7 @@
 </script>
 
 <svelte:head>
-	<title>Blog · Mikas James</title>
+	<title>Blog · zyRoWn</title>
 	<meta
 		name="description"
 		content="Thoughts on software engineering, frontend development, and building things on the web."

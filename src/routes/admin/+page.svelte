@@ -531,7 +531,7 @@ import {
 </script>
 
 <svelte:head>
-	<title>Admin Dashboard · Mikas James</title>
+	<title>Admin Dashboard · zyRoWn</title>
 	<meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 
