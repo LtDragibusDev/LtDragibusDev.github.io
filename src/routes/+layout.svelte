@@ -102,7 +102,7 @@
 		</ul>
 
 		<a
-			href="mailto:zyrown@gmail.com"
+			href="mailto:zyrownDCSWS@proton.me"
 			class="hidden md:inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-accent-500/40 text-accent-400 text-sm font-medium hover:bg-accent-500/10 hover:border-accent-400 transition-all duration-200"
 		>
 			<svg
@@ -187,11 +187,11 @@
 				</li>
 				<li class="mt-2 pt-2 border-t border-zinc-800/60">
 					<a
-						href="mailto:zyrown@gmail.com"
+						href="mailto:zyrownDCSWS@proton.me"
 						onclick={closeMobile}
 						class="block py-3 px-4 rounded-lg text-accent-400 hover:bg-accent-500/10 transition-all duration-200 text-sm font-medium"
 					>
-						zyrown@gmail.com
+						zyrownDCSWS@proton.me
 					</a>
 				</li>
 			</ul>
